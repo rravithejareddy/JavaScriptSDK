@@ -362,7 +362,8 @@ CloudObject.on = function(tableName, eventType, cloudQuery, callback, done) {
                 data: {
                     query: cloudQuery,
                     timestamp: timestamp,
-                    eventType: eventType
+                    eventType: eventType,
+                    appKey: CB.appKey
                 }
             };
 
