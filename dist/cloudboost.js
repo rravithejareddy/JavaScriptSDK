@@ -8496,15 +8496,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	            if (opts && opts.disableRealtime === true) {
 	                _CB2.default._isRealtimeDisabled = true;
 	            } else {
+	                var socketRelativeUrl = getUrlFromUri(_CB2.default.apiUrl);
 	                if (_CB2.default._isNode) {
 	                    _CB2.default.io = __webpack_require__(66);
 	                    _CB2.default.Socket = _CB2.default.io(_CB2.default.apiUrl, {
 	                        jsonp: false,
-	                        transports: ['websocket']
+	                        transports: ['websocket'],
+	                        path: socketRelativeUrl
 	                    });
 	                } else {
 	                    _CB2.default.io = __webpack_require__(67);
-	                    _CB2.default.Socket = _CB2.default.io(_CB2.default.apiUrl);
+	                    _CB2.default.Socket = _CB2.default.io(_CB2.default.apiUrl, {
+	                        path: socketRelativeUrl
+	                    });
 	                }
 	            }
 	            _CB2.default.CloudApp._isConnected = true;
@@ -8576,6 +8580,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, function (err) {
 	        _CB2.default.CloudApp._isConnected = false;
 	    });
+	}
+
+	function getUrlFromUri(url) {
+	    var socketRelativeUrl = url;
+	    socketRelativeUrl = socketRelativeUrl.replace('://', '');
+	    socketRelativeUrl = socketRelativeUrl.split('/');
+	    // remove null value
+	    socketRelativeUrl = socketRelativeUrl.filter(function (x) {
+	        return x;
+	    });
+	    if (socketRelativeUrl.length > 1) {
+	        socketRelativeUrl.splice(0, 1, '');
+	        socketRelativeUrl.push('socket.io');
+	        url = socketRelativeUrl.join('/');
+	    } else {
+	        url = "/socket.io";
+	    }
+	    return url;
 	}
 
 	_CB2.default.CloudApp = new CloudApp();

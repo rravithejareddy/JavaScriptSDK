@@ -27,15 +27,19 @@ class CloudApp {
         if (opts && opts.disableRealtime === true) {
             CB._isRealtimeDisabled = true;
         } else {
+            var socketRelativeUrl = getUrlFromUri(CB.apiUrl)
             if (CB._isNode) {
                 CB.io = require('IO')
                 CB.Socket = CB.io(CB.apiUrl,{
                     jsonp: false,
-                    transports: ['websocket']
+                    transports: ['websocket'],
+                    path: socketRelativeUrl
                 })
             } else {
                 CB.io = require('./CloudSocketClientLib.js')
-                CB.Socket = CB.io(CB.apiUrl);
+                CB.Socket = CB.io(CB.apiUrl,{
+                    path: socketRelativeUrl
+                });
             }
         }
         CB.CloudApp._isConnected = true;
@@ -97,6 +101,22 @@ function _confirmConnection(callback) {
     }, function(err) {
         CB.CloudApp._isConnected = false;
     });
+}
+
+function getUrlFromUri(url){
+    var socketRelativeUrl = url;
+    socketRelativeUrl = socketRelativeUrl.replace('://','');
+    socketRelativeUrl = socketRelativeUrl.split('/');
+    // remove null value
+    socketRelativeUrl = socketRelativeUrl.filter(function(x){ return x });
+    if(socketRelativeUrl.length > 1){
+        socketRelativeUrl.splice(0,1,'');
+        socketRelativeUrl.push('socket.io');
+        url = socketRelativeUrl.join('/');
+    } else{
+        url = "/socket.io";
+    } 
+    return url;
 }
 
 CB.CloudApp = new CloudApp()
