@@ -12,7 +12,7 @@ class CloudApp {
             applicationKey = applicationId;
             applicationId = serverUrl;
         } else {
-            CB.apiUrl = serverUrl;
+            CB.apiUrl = stripTrailingSlash(serverUrl);
         }
 
         if (typeof applicationKey === "object") {
@@ -95,12 +95,21 @@ class CloudApp {
 }
 
 function _confirmConnection(callback) {
-    var URL = 'https://api.cloudboost.io/status';
+    var URL = CB.apiUrl + '/status';
     CB._request('GET', URL).then(function(res) {
         CB.CloudApp._isConnected = true;
     }, function(err) {
         CB.CloudApp._isConnected = false;
     });
+}
+
+function stripTrailingSlash(url){
+    if(url[url.length-1] == '/'){
+        url = url.split('');
+        url.splice(-1,1);
+        url = url.join('');
+    }
+    return url;
 }
 
 function getUrlFromUri(url){
