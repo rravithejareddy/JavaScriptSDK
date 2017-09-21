@@ -28,16 +28,17 @@ class CloudApp {
             CB._isRealtimeDisabled = true;
         } else {
             var socketRelativeUrl = getUrlFromUri(CB.apiUrl)
+            var urlWithoutNamespace = getUrlWithoutNsc(CB.apiUrl,socketRelativeUrl)
             if (CB._isNode) {
                 CB.io = require('IO')
-                CB.Socket = CB.io(CB.apiUrl,{
+                CB.Socket = CB.io(urlWithoutNamespace,{
                     jsonp: false,
                     transports: ['websocket'],
                     path: socketRelativeUrl
                 })
             } else {
                 CB.io = require('./CloudSocketClientLib.js')
-                CB.Socket = CB.io(CB.apiUrl,{
+                CB.Socket = CB.io(urlWithoutNamespace,{
                     path: socketRelativeUrl
                 });
             }
@@ -126,6 +127,10 @@ function getUrlFromUri(url){
         url = "/socket.io";
     } 
     return url;
+}
+
+function getUrlWithoutNsc(uri,url){
+    return uri.replace(url,'')
 }
 
 CB.CloudApp = new CloudApp()

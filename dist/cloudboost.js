@@ -8497,16 +8497,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	                _CB2.default._isRealtimeDisabled = true;
 	            } else {
 	                var socketRelativeUrl = getUrlFromUri(_CB2.default.apiUrl);
+	                var urlWithoutNamespace = getUrlWithoutNsc(_CB2.default.apiUrl, socketRelativeUrl);
 	                if (_CB2.default._isNode) {
 	                    _CB2.default.io = __webpack_require__(66);
-	                    _CB2.default.Socket = _CB2.default.io(_CB2.default.apiUrl, {
+	                    _CB2.default.Socket = _CB2.default.io(urlWithoutNamespace, {
 	                        jsonp: false,
 	                        transports: ['websocket'],
 	                        path: socketRelativeUrl
 	                    });
 	                } else {
 	                    _CB2.default.io = __webpack_require__(67);
-	                    _CB2.default.Socket = _CB2.default.io(_CB2.default.apiUrl, {
+	                    _CB2.default.Socket = _CB2.default.io(urlWithoutNamespace, {
 	                        path: socketRelativeUrl
 	                    });
 	                }
@@ -8609,6 +8610,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return url;
 	}
 
+	function getUrlWithoutNsc(uri, url) {
+	    return uri.replace(url, '');
+	}
+
 	_CB2.default.CloudApp = new CloudApp();
 
 	exports.default = CloudApp;
@@ -8623,7 +8628,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 67 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var require;var require;/* WEBPACK VAR INJECTION */(function(global) {var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+	var require;var require;var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global) {var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 	if (!CB._isNode) {
 	    //Socket.io Client library
