@@ -8602,15 +8602,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	    });
 	    if (socketRelativeUrl.length > 1) {
 	        socketRelativeUrl.splice(0, 1, '');
-	        socketRelativeUrl.push('socket.io');
 	        url = socketRelativeUrl.join('/');
 	    } else {
-	        url = "/socket.io";
+	        url = "";
 	    }
 	    return url;
 	}
 
 	function getUrlWithoutNsc(uri, url) {
+	    if (url == "") {
+	        return uri;
+	    }
 	    return uri.replace(url, '');
 	}
 
