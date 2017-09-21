@@ -34,12 +34,12 @@ class CloudApp {
                 CB.Socket = CB.io(urlWithoutNamespace,{
                     jsonp: false,
                     transports: ['websocket'],
-                    path: socketRelativeUrl
+                    path: socketRelativeUrl + '/socket.io'
                 })
             } else {
                 CB.io = require('./CloudSocketClientLib.js')
                 CB.Socket = CB.io(urlWithoutNamespace,{
-                    path: socketRelativeUrl
+                    path: socketRelativeUrl + '/socket.io'
                 });
             }
         }
