@@ -65,7 +65,7 @@ describe("Export & Import Table", function () {
         if (!window) {
             CB._request('POST', url, exportParams).then(function (data) {
 
-                data = JSON.parse(data).data;
+                data = JSON.parse(data);
                 if (data.length !== savedObject.length) {
                     return done('ERROR')
                 }
@@ -91,7 +91,7 @@ describe("Export & Import Table", function () {
                 if (flag) {
                     var name = 'abc.json';
                     var type = 'application/json';
-                    var importData = { "data": data };
+                    var importData = data;
                     var obj = new CB.CloudTable('abc');
                     obj.save().then(function (res) {
                         var fileObj = new CB.CloudFile(name, JSON.stringify(importData), type);
@@ -150,7 +150,7 @@ describe("Export & Import Table", function () {
                 data: exportParams,
                 success: function (resp) {
                     try {
-                        var data = resp.data
+                        var data = resp
                         if (data.length !== savedObject.length) {
                             return done('ERROR')
                         }
@@ -176,7 +176,7 @@ describe("Export & Import Table", function () {
                         if (flag) {
                             var name = 'abc.json';
                             var type = 'application/json';
-                            var importData = { "data": data };
+                            var importData = data;
                             var obj = new CB.CloudTable('abc');
                             obj.save().then(function (res) {
                                 var fileObj = new CB.CloudFile(name, JSON.stringify(importData), type);
