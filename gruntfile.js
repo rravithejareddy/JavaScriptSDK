@@ -38,7 +38,6 @@ module.exports = function(grunt) {
                     'test/init/init.js',
                     'test/CloudTable/createTestTables.js',
                     'test/misc/exportimportTable.js',
-                    'test/misc/exportimportDatabase.js',
                     'test/CloudFile/CloudFile.js',
                     'test/CloudUser/userTest.js',
                     'test/CloudEvent/test.js',

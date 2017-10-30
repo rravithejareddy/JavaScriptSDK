@@ -2,7 +2,7 @@
 describe("Export & Import Database", function () {
 
     var savedObject = [];
-    var defaultTables = ["Device", "_Event", "_File", "_Funnel", "Role", "User", "_Settings", "fs.files", "fs.chunks"];
+    var defaultTables = ["_Schema", "Device", "_Event", "_File", "_Funnel", "Role", "User", "_Settings"];
     var tables = [];
 
     before(function () {
@@ -62,7 +62,7 @@ describe("Export & Import Database", function () {
     });
 
     it("Export Database and Import Database", function (done) {
-        this.timeout(50000);
+        this.timeout(200000);
         var default_count = 0;
         var table_count = 0;
         var exportUrl = CB.apiUrl + "/backup/" + CB.appId + "/exportdb";
@@ -74,30 +74,14 @@ describe("Export & Import Database", function () {
                 data = JSON.parse(resp);
                 if (typeof data == "object") {
                     data.map(function (element) {
-                        if (element.name != "_Schema" && element.name != "system.indexes") {
                             if (defaultTables.indexOf(element.name) != -1) {
                                 default_count++;
                             } else if (tables.indexOf(element.name) != -1) {
                                 table_count++;
                             }
-                        }
                     });
                     if (table_count >= tables.length && default_count == defaultTables.length) {
-                        importParams['key'] = CB.appKey;
-                        var Buffer = require('buffer/').Buffer;
-                        var importData = Buffer.from(resp, 'utf8');
-                        importParams['file'] = importData.toString('utf-8');
-                        var req = request.post(importUrl, function (err, resp, body) {
-                            done();
-                        }, function (err) {
-                            done(err)
-                        });
-                        var form = req.form();
-                        form.append('key', CB.appKey);
-                        form.append('file', importData.toString('utf-8'), {
-                            filename: 'myfile.json',
-                            contentType: 'text/json'
-                        });
+                        done();
                     } else {
                         done("Data Inappropriate");
                     }
@@ -115,37 +99,14 @@ describe("Export & Import Database", function () {
                         data = JSON.parse(resp);
                         if (typeof data == "object") {
                             data.map(function (element) {
-                                if (element.name != "_Schema" && element.name != "system.indexes") {
                                     if (defaultTables.indexOf(element.name) != -1) {
                                         default_count++;
                                     } else if (tables.indexOf(element.name) != -1) {
                                         table_count++;
                                     }
-                                }
                             });
                             if (table_count >= tables.length && default_count == defaultTables.length) {
-                                importParams = new FormData();
-                                importParams.append('key', CB.appKey)
-                                var blob = new Blob([resp], { "type": "application/json" });
-                                importParams.append('file', blob);
-                                $.ajax({
-                                    url: importUrl,
-                                    type: "POST",
-                                    data: importParams,
-                                    processData: false,
-                                    contentType: false,
-                                    success: function (resp) {
-                                        try {
-                                            done();
-                                        } catch (e) {
-                                            done(e);
-                                        }
-                                    },
-                                    error: function (xhr, status, errorThrown) {
-                                        done("Something went wrong..");
-                                    },
-
-                                });
+                                done();
                             } else {
                                 done("Data Inappropriate");
                             }
