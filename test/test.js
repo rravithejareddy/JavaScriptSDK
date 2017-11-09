@@ -12190,8 +12190,8 @@ describe("CloudNotification", function() {
     it("should publish data to the channel.", function(done) {
 
         this.timeout(30000);
-        CB.CloudNotification.on('sample',  function(data){
-	      	if(data === 'data'){
+        CB.CloudNotification.on('sample1',  function(data){
+	      	if(data === 'data1'){
 	      		done();
 	      	}else{
 	      		throw 'Error wrong data received.';
@@ -12200,7 +12200,7 @@ describe("CloudNotification", function() {
       	{
       	success : function(){
       		//publish to a channel. 
-      		CB.CloudNotification.publish('sample', 'data',{
+      		CB.CloudNotification.publish('sample1', 'data1',{
 				success : function(){
 					//succesfully published. //do nothing. 
 					console.log("Published Successfully.");
@@ -12223,18 +12223,18 @@ describe("CloudNotification", function() {
 
     	this.timeout(20000);
 
-     	CB.CloudNotification.on('sample', 
+     	CB.CloudNotification.on('sample2', 
 	      function(data){
 	      	throw 'stopped listening, but still receiving data.';
 	      }, 
 	      {
 	      	success : function(){
 	      		//stop listening to a channel. 
-	      		CB.CloudNotification.off('sample', {
+	      		CB.CloudNotification.off('sample2', {
 					success : function(){
 						//succesfully stopped listening.
 						//now try to publish. 
-						CB.CloudNotification.publish('sample', 'data',{
+						CB.CloudNotification.publish('sample2', 'data',{
 							success : function(){
 								//succesfully published.
 								//wait for 5 seconds.
@@ -12263,6 +12263,7 @@ describe("CloudNotification", function() {
     });
 
 });
+
 describe("MasterKey ACL", function () {
 
      before(function(){
