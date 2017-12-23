@@ -27,7 +27,8 @@
     "jsdom": "^9.10.0",
     "localStorage": "^1.0.3",
     "localforage": "^1.5.0",
-    "socket.io-client": "^1.7.1"
+    "socket.io-client": "^1.7.1",
+    "phantomjs": "^2.1.7"
   },
   "devDependencies": {
     "babel-core": "^6.17.0",
@@ -46,7 +47,6 @@
     "json-loader": "^0.5.4",
     "mocha": "^2.4.5",
     "mocha-phantomjs": "^4.1.0",
-    "phantomjs": "^2.1.7",
     "publish": "^0.6.0",
     "webpack": "~1.13.1",
     "webpack-dev-server": "~1.14.1"
