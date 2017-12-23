@@ -15,7 +15,9 @@
     "test": "npm run test-browser && npm run test-node",
     "test-browser": "mocha-phantomjs -p ./node_modules/phantomjs/lib/phantom/bin/phantomjs -s webSecurityEnabled=false --ssl-protocol=any test/index.html",
     "test-node": "./node_modules/.bin/mocha --reporter spec test/test.js",
-    "2npm": "publish"
+    "2npm": "publish",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "author": "hello@cloudboost.io",
   "license": "MIT",
@@ -28,7 +30,8 @@
     "localStorage": "^1.0.3",
     "localforage": "^1.5.0",
     "socket.io-client": "^1.7.1",
-    "phantomjs": "^2.1.7"
+    "phantomjs": "^2.1.7",
+    "snyk": "^1.62.0"
   },
   "devDependencies": {
     "babel-core": "^6.17.0",
@@ -50,5 +53,6 @@
     "publish": "^0.6.0",
     "webpack": "~1.13.1",
     "webpack-dev-server": "~1.14.1"
-  }
+  },
+  "snyk": true
 }
