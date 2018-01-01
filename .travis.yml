@@ -23,10 +23,7 @@ after_success:
 - echo "OK"
 after_failure:
 - docker logs cloudboost
-- ls node_modules/phantomjs/lib/phantom/bin/
-- ls ./node_modules/phantomjs/lib/phantom/bin/
-- node_modules/phantomjs/lib/phantom/bin/phantomjs -v
-- ./node_modules/phantomjs/lib/phantom/bin/phantomjs -v
+- /usr/local/phantomjs/bin/phantomjs -v
 before_deploy:
   - git config --global user.email "builds@travis-ci.com"
   - git config --global user.name "Travis CI"
